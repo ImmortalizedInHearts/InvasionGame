@@ -13,9 +13,6 @@ def run_game():
                                       ai_settings.screen_hight))
     pygame.display.set_caption("Alien invasion")
 
-    # Setting up background color
-    bg_color = (230, 230, 230)
-
     # Launch of the main game loop
     while True:
         # Tracking keyboard and mouse events
