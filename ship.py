@@ -9,7 +9,7 @@ class Ship():
         self.screen = screen
 
         # Loading ship image and getting a rectangle
-        self.image = pygame.image.load('image/ship.bmp')
+        self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         # Each new ship appears in screen bottom
