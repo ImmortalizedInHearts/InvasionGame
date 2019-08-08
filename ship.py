@@ -29,7 +29,7 @@ class Ship():
         if self.moving_right:
             self.center += self.ai_settings.ship_speed_factor
         if self.moving_left:
-            self.rect.centerx -= self.ai_settings.ship_speed_factor
+            self.center -= self.ai_settings.ship_speed_factor
 
         # Updating rect attribute on the base of self.center
         self.rect.centerx = self.center
