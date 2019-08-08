@@ -22,3 +22,14 @@ class Bullet(Sprite):
         # Determination of bullets color and speed
         self.color = ai_settings.bullet_color
         self.speed_factor = ai_settings.bullet_speed_factor
+
+    def update(self):
+        """Moves bullet up the screen"""
+        # Updating bullet position in float format
+        self.y -= self.speed_factor
+        # Updating rect position
+        self.rect.y = self.y
+
+    def draw_bullet(self):
+        """Bullet displaying"""
+        pygame.draw.rect(self.screen, self.color, self.rect)
