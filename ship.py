@@ -13,6 +13,7 @@ class Ship():
         self.image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
+
         # Each new ship appears in screen bottom
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
@@ -26,9 +27,9 @@ class Ship():
     def update(self):
         """Updating ship position due to flags"""
         # Updates center attribute, not rect
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ai_settings.ship_speed_factor
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
             self.center -= self.ai_settings.ship_speed_factor
 
         # Updating rect attribute on the base of self.center
