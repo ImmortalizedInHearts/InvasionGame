@@ -17,6 +17,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
     elif event.key == pygame.K_SPACE:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
+    elif event.key == pygame.K_ESCAPE:
+        sys.exit()
 
 
 def check_keyup_events(event, ship):
