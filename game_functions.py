@@ -73,17 +73,25 @@ def update_bullets(bullets):
 def create_fleet(ai_settings, screen, aliens):
     """Creates aliens fleet"""
     # Alien creation and calculation of aliens quantity in line
-    # Interval between aliens equal to alien width
-
     alien = Alien(ai_settings, screen)
-    alien_width = alien.rect.width
-    available_space_x = ai_settings.screen_width - 2 * alien_width
-    number_aliens_x = int(available_space_x / (2 * alien_width))
+    number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
 
     # Aliens first line creation
     for alien_number in range(number_aliens_x):
-        # Creates alien and sets it in line
-        alien = Alien(ai_settings, screen)
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
+        create_alien(ai_settings, screen, aliens, alien_number)
+
+
+def get_number_aliens_x(ai_settings, alien_width):
+    """Calculates quantity of aliens in line"""
+    available_space_x = ai_settings.screen_width - 2 * alien_width
+    number_aliens_x = int(available_space_x / (2 * alien_width))
+    return number_aliens_x
+
+
+def create_alien(ai_settings, screen, aliens, alien_number):
+    """Creates alien and sets it in line"""
+    alien = Alien(ai_settings, screen)
+    alien_width = alien.rect.width
+    alien.x = alien_width + 2 * alien_width * alien_number
+    alien.rect.x = alien.x
+    aliens.add(alien)
