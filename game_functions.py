@@ -70,6 +70,28 @@ def update_bullets(bullets):
             bullets.remove(bullet)
 
 
+def check_fleet_edges(ai_settings, aliens):
+    """Reacts to the alien reaching the edge of the screen"""
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """Moves down fleet and changes it's direction"""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+def update_aliens(ai_settings, aliens):
+    """Checks if the fleet has reached the edge of the screen
+       Then updates positions of aliens fleet"""
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+
+
 def get_number_aliens_x(ai_settings, alien_width):
     """Calculates quantity of aliens in line"""
     available_space_x = ai_settings.screen_width - 2 * alien_width
