@@ -61,13 +61,16 @@ def fire_bullet(ai_settings, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets):
     """Updates bullets positions and deletes unnecessary bullets"""
     bullets.update()
     # Removing bullets that went beyond the edge of the screen
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    # Alien hit check
+    # If hit was detected, bullet will be deleted
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
 
 def check_fleet_edges(ai_settings, aliens):
