@@ -20,7 +20,7 @@ class Settings():
         self.bullet_allowed = 5
 
         # Alien parameters
-        self.alien_speed_factor = 1
+        self.alien_speed_factor = 10
         self.fleet_drop_speed = 10
         # fleet_direction = 1 moves right; -1 left
         self.fleet_direction = 1
