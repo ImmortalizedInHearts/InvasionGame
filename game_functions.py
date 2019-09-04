@@ -30,7 +30,8 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def check_events(ai_settings, screen, stats, play_button, ship, bullets):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens,
+                 bullets):
     # Tracking keyboard and mouse events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,13 +42,26 @@ def check_events(ai_settings, screen, stats, play_button, ship, bullets):
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(stats, play_button, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats, play_button, ship,
+                              aliens, bullets, mouse_x, mouse_y)
 
 
-def check_play_button(stats, play_button, mouse_x, mouse_y):
+def check_play_button(ai_settings, screen, stats, play_button, ship,
+                      aliens, bullets, mouse_x, mouse_y):
     """Starts new game when you press the play button"""
-    if play_button.rect.collidepoint(mouse_x, mouse_y):
-        stats. game_active = True
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        """Reset game statistic"""
+        stats.reset_stats()
+        stats.game_active = True
+
+    # Lists cleaning
+        aliens.empty()
+        bullets.empty()
+
+        # New fleet creation and placement of the ship in center
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
 
 
 def check_fleet_edges(ai_settings, aliens):
