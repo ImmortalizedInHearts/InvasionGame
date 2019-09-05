@@ -76,10 +76,15 @@ def check_fleet_edges(ai_settings, aliens):
             break
 
 
-def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
+def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
+                                  aliens, bullets):
     """Processing of collisions of bullets and aliens"""
     # Deleting of bullets and aliens  participating in collisions
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
+        sb.prep_score()
 
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
@@ -111,14 +116,15 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens,
     pygame.display.flip()
 
 
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Updates bullets positions and deletes unnecessary bullets"""
     bullets.update()
     # Removing bullets that went beyond the edge of the screen
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
+    check_bullet_alien_collisions(ai_settings, screen, stats, sb,
+                                  ship, aliens, bullets)
 
     if len(aliens) == 0:
         # Deleting existing bullets, speed increasing and creation new fleet

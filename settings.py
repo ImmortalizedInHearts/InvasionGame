@@ -31,6 +31,9 @@ class Settings():
         self.bullet_speed_factor = 3
         self.alien_speed_factor = 1
 
+        # Score count
+        self.alien_points = 50
+
         # fleet_direction = 1 moves right; -1 left
         self.fleet_direction = 1
 
