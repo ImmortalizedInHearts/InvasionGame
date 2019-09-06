@@ -62,6 +62,7 @@ def check_play_button(ai_settings, screen, stats, sb, play_button, ship,
     # Reset score and level images
     sb.prep_score()
     sb.prep_level()
+    sb.prep_ships()
 
     # Lists cleaning
     aliens.empty()
@@ -92,13 +93,13 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         check_high_score(stats, sb)
 
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """Processing of collisions of aliens and bottom"""
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # The same thing happens as in a collision with a ship
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
             break
 
 
@@ -148,7 +149,7 @@ def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
         create_fleet(ai_settings, screen, ship, aliens)
 
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Checks if the fleet has reached the edge of the screen
        Then updates positions of aliens fleet"""
     check_fleet_edges(ai_settings, aliens)
@@ -156,9 +157,9 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
 
     # "Alien-ship" collision check
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
 
 def get_number_aliens_x(ai_settings, alien_width):
@@ -215,11 +216,14 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """Alien/ship collision processing"""
     if stats.ships_left > 0:
         # Redusing 'ship_left'
         stats.ships_left -= 1
+
+        # Game information updating
+        sb.prep_ships()
 
         # Lists cleaning
         aliens.empty()
