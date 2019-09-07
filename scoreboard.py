@@ -14,7 +14,7 @@ class Scoreboard():
 
         # Font settings
         self.text_color = (30, 30, 30)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont("comicsansms", 30)
 
         # Source image preparation
         self.prep_score()
@@ -31,8 +31,8 @@ class Scoreboard():
 
         # Displaying score in right top corner
         self.score_rect = self.score_image.get_rect()
-        self.score_rect.right = self.screen_rect.right - 20
-        self.score_rect.top = 20
+        self.score_rect.right = self.screen_rect.right - 400
+        self.score_rect.top = 5
 
     def prep_high_score(self):
         """Converts high score into graphic image"""
@@ -44,19 +44,19 @@ class Scoreboard():
 
         # High score is aligned with top center of screen
         self.high_score_rect = self.high_score_image.get_rect()
-        self.high_score_rect.centerx = self.screen_rect.centerx
+        self.high_score_rect.left = self.screen_rect.left + 300
         self.high_score_rect.top = self.score_rect.top
 
     def prep_level(self):
         """Converts level into graphic image"""
-        self.level_image = self.font.render(str(self.stats.level),
+        self.level_image = self.font.render("Level: " + str(self.stats.level),
                                             True, self.text_color,
                                             self.ai_settings.bg_color)
 
         # Level is displayed with current score
         self.level_rect = self.level_image.get_rect()
-        self.level_rect.right = self.score_rect.right
-        self.level_rect.top = self.score_rect.bottom + 10
+        self.level_rect.right = self.score_rect.right + 300
+        self.level_rect.top = self.score_rect.top
 
     def prep_ships(self):
         """Shows quantity of potential attempts"""
