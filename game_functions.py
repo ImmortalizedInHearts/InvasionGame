@@ -10,7 +10,7 @@ from alien import Alien
 """Stores functions provide game process"""
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, stats, ship, bullets):
     """Reacts on key pushing"""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -19,6 +19,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_ESCAPE:
+        with open('high_score.txt', 'w', encoding='utf-8') as hs:
+            hs.write(str(stats.high_score))
         sys.exit()
 
 
@@ -37,7 +39,8 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens,
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, screen, stats, ship,
+                                 bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
